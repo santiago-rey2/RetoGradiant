@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface DocumentsDAO extends CrudRepository<Documents, Long> {
     public Documents findByName(String name);
-    public boolean existsByName(String name);
+    public boolean existsByUrl(String url);
     public List<Documents> findByTechnology_IdTechnology(Long id);
 }

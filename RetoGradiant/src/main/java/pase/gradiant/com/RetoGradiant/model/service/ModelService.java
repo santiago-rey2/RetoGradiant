@@ -6,12 +6,13 @@ import pase.gradiant.com.RetoGradiant.model.exceptions.InstanceNotFoundException
 import pase.gradiant.com.RetoGradiant.model.exceptions.UserAllreadySingUp;
 import pase.gradiant.com.RetoGradiant.rest.dtos.UserDTO;
 
+import javax.management.InstanceAlreadyExistsException;
 import java.util.List;
 
 public interface ModelService {
 
-    public Category addCategory(String name) throws InputValidationException;
-    public Documents addDocument(String name, String url, String technology) throws InputValidationException;
+    public Category addCategory(String name) throws InputValidationException, InstanceAlreadyExistsException;
+    public Documents addDocument(String name, String url, String technology) throws InputValidationException, InstanceAlreadyExistsException;
 
     public List<UserTechnology> findUserTechnology(String email) throws InstanceNotFoundException;
     public List<UserTechnology> findByTechnology(String technology);

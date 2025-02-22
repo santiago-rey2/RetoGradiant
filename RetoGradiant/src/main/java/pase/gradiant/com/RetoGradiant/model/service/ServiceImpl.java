@@ -5,9 +5,11 @@ import org.springframework.stereotype.Service;
 import pase.gradiant.com.RetoGradiant.model.entities.*;
 import pase.gradiant.com.RetoGradiant.model.exceptions.InputValidationException;
 import pase.gradiant.com.RetoGradiant.model.exceptions.InstanceNotFoundException;
+import pase.gradiant.com.RetoGradiant.model.exceptions.IntanceAllreadyExistsException;
 import pase.gradiant.com.RetoGradiant.model.exceptions.UserAllreadySingUp;
 import pase.gradiant.com.RetoGradiant.rest.dtos.UserDTO;
 
+import javax.management.InstanceAlreadyExistsException;
 import java.util.List;
 
 import static pase.gradiant.com.RetoGradiant.utils.PropertyValidator.userValidator;
@@ -32,18 +34,27 @@ public class ServiceImpl implements ModelService {
 
 
     @Override
-    public Category addCategory(String name) throws InputValidationException {
+    public Category addCategory(String name) throws InputValidationException,InstanceAlreadyExistsException {
+        if (name == null) {
+            throw new InputValidationException("All fields are required");
+        }
         if (categoryDAO.existsByName(name)) {
-            throw new InputValidationException("Category " + name + " already exists");
+            throw new InstanceAlreadyExistsException("Category " + name + " already exists");
         }
         return categoryDAO.save(new Category(name));
     }
 
     @Override
-    public Documents addDocument(String name, String url, String technology) throws InputValidationException {
+    public Documents addDocument(String name, String url, String technology) throws InputValidationException, InstanceAlreadyExistsException {
+        if (name == null || url == null || technology == null) {
+            throw new InputValidationException("All fields are required");
+        }
+        if (documentsDAO.existsByUrl(url)) {
+            throw new InstanceAlreadyExistsException("Document " + url + " already on database");
+        }
         Technology tech = technologyDAO.findByName(technology);
         if (tech == null) {
-            throw new InputValidationException("Technology " + technology + " not found");
+            throw new InstanceNotFoundException("Technology " + technology + " not found");
         }
         Documents docu = new Documents(name, url, tech);
         System.out.println(docu);
