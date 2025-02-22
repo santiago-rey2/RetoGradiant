@@ -1,4 +1,4 @@
-package pase.gradiant.com.RetoGradiant.entities;
+package pase.gradiant.com.RetoGradiant.model.entities;
 
 import jakarta.persistence.*;
 
@@ -7,7 +7,8 @@ import jakarta.persistence.*;
 public class UserTechnology {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usertech_seq")
+    @SequenceGenerator(name = "usertech_seq", sequenceName = "usertech_sequence", initialValue = 100, allocationSize = 1)
     private Long id;
 
     @ManyToOne
@@ -46,5 +47,15 @@ public class UserTechnology {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    @Override
+    public String toString() {
+        return "UserTechnology{" +
+                "id=" + id +
+                ", user=" + user +
+                ", technology=" + technology +
+                ", level='" + level + '\'' +
+                '}';
     }
 }
