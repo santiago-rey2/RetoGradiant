@@ -32,11 +32,22 @@ public class ServiceImpl implements ModelService {
 
 
     @Override
-    public Category addCategory(Category category) throws InputValidationException {
-        if (categoryDAO.existsByName(category.getName())) {
-            throw new InputValidationException("Category " + category.getName() + " already exists");
+    public Category addCategory(String name) throws InputValidationException {
+        if (categoryDAO.existsByName(name)) {
+            throw new InputValidationException("Category " + name + " already exists");
         }
-        return categoryDAO.save(category);
+        return categoryDAO.save(new Category(name));
+    }
+
+    @Override
+    public Documents addDocument(String name, String url, String technology) throws InputValidationException {
+        Technology tech = technologyDAO.findByName(technology);
+        if (tech == null) {
+            throw new InputValidationException("Technology " + technology + " not found");
+        }
+        Documents docu = new Documents(name, url, tech);
+        System.out.println(docu);
+        return documentsDAO.save(docu);
     }
 
     @Override

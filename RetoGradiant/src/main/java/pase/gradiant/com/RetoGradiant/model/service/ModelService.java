@@ -10,7 +10,8 @@ import java.util.List;
 
 public interface ModelService {
 
-    public Category addCategory(Category category) throws InputValidationException;
+    public Category addCategory(String name) throws InputValidationException;
+    public Documents addDocument(String name, String url, String technology) throws InputValidationException;
 
     public List<UserTechnology> findUserTechnology(String email) throws InstanceNotFoundException;
     public List<UserTechnology> findByTechnology(String technology);

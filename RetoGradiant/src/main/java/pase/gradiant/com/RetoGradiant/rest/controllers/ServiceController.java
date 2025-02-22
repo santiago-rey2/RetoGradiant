@@ -23,7 +23,7 @@ public class ServiceController {
     @PostMapping("/signUp")
     public ResponseEntity<UserDTO> signUp(@RequestBody UserDTO userDto) throws UserAllreadySingUp {
         UserDTO newUser = modelService.singUp(userDto.getPssw(), userDto.getName(), userDto.getEmail(), userDto.getRole());
-        return ResponseEntity.ok().body(newUser);
+        return ResponseEntity.created(null).body(newUser);
     }
 
     @PostMapping("/login")
@@ -31,6 +31,7 @@ public class ServiceController {
         UserDTO user = modelService.logIn(userDto.getEmail(), userDto.getPssw());
         return ResponseEntity.ok().body(user);
     }
+
 
 
 
