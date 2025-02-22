@@ -13,12 +13,14 @@ import pase.gradiant.com.RetoGradiant.rest.dtos.DocumentDTO;
 import javax.management.InstanceAlreadyExistsException;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/documents")
 public class DocumentsController {
 
     @Autowired
     private ModelService modelService;
+
 
     @GetMapping("/byTechnology")
     public ResponseEntity<List<Documents>> getDocumentsByTechnology(@RequestParam String technology) {
